@@ -6,7 +6,7 @@ class BaseDrawTool{
         this.selectionCtrl = boarCtrl.selectionCtrl
         this.uiRenderTexture = boarCtrl.uiRenderTexture
         this.add = true
-        this.baseImage = boarCtrl.baseImage
+        this.baseCanvas = boarCtrl.baseCanvas
         this.layer = null
     }
     mouseDown(pos){}

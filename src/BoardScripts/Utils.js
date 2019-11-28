@@ -1,3 +1,6 @@
+import {func} from "prop-types";
+import RGBUtils from "wayak-rgb-utils"
+
 var UTILS={};
 UTILS.distance3d=function(vector3_1,vector3_2){
     //console.log("/////distance3d//",vector3_1,vector3_2);
@@ -252,7 +255,45 @@ UTILS.getCenterData=function(imageWidth,imageHeight,canvasWidth,canvasHeight){
     return {x:x,y:y,width:imageWidth,height:imageHeight,scale:scale};
 }
 
-UTILS.getShadowsAndLights=function(canvas){
+UTILS.getBlackAndWitheLayers = function(canvas){
+    const blackCanvas=document.createElement("canvas");
+    blackCanvas.width=canvas.width;
+    blackCanvas.height=canvas.height;
+    const blackCtx=blackCanvas.getContext('2d');
+    const blackImageData = blackCtx.getImageData(0,0,canvas.width,canvas.height)
+    const blackBuffer = new Uint32Array(blackImageData.data.buffer)
+
+    const whiteCanvas=document.createElement("canvas");
+    whiteCanvas.width=canvas.width;
+    whiteCanvas.height=canvas.height;
+    const whiteCtx=whiteCanvas.getContext('2d');
+    const whiteImageData = whiteCtx.getImageData(0,0,canvas.width,canvas.height)
+    const whiteBuffer = new Uint32Array(whiteImageData.data.buffer)
+
+    const ctx = canvas.getContext('2d');
+    const canvasBuffer = new Uint32Array(ctx.getImageData(0,0,canvas.width,canvas.height).data.buffer)
+    const totalOfPixels = canvasBuffer.length
+
+    for(let i = 0; i < totalOfPixels; i++){
+        const pixelUint32 = canvasBuffer[i]
+        const {r,g,b,a} = RGBUtils.numberToRGBA(pixelUint32)
+        const hsv = UTILS.rgb2hsv(r,g,b)
+        const blackRGBAPixel = {r:0,g:0,b:0,a:(255/100)*(100-hsv.v)}
+        whiteBuffer[i] = RGBUtils.RGBAToNumber(255,255,255,(255/100)*hsv.v)
+        blackBuffer[i] = RGBUtils.RGBAToNumber(0,0,0,(255/100)*(100-hsv.v))
+    }
+    blackCtx.putImageData(blackImageData,0,0)
+    whiteCtx.putImageData(whiteImageData,0,0)
+    return {
+        blackLayer:blackCanvas,
+        whiteLayer:whiteCanvas
+    }
+
+
+}
+
+
+/*UTILS.getShadowsAndLights=function(canvas){
     var shadowsCanvas=document.createElement("canvas");
     shadowsCanvas.width=canvas.width;
     shadowsCanvas.height=canvas.height;
@@ -289,13 +330,13 @@ UTILS.getShadowsAndLights=function(canvas){
     }
     shadowCtx.putImageData(shadowsImageData,0,0);
     ligthsCtx.putImageData(lightsImageData,0,0);
-    //console.log(shadowsCanvas.toDataURL());
-    //console.log(ligthsCanvas.toDataURL());
+    console.log(shadowsCanvas.toDataURL());
+    console.log(ligthsCanvas.toDataURL());
     return {
         shadows:shadowsCanvas,
         ligths:ligthsCanvas
     }
-}
+}*/
 
 UTILS.toDegrees = function(n){
     return n * 180 / Math.PI;

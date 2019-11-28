@@ -10,14 +10,14 @@ class ToolSelectionMagicWand extends BaseDrawTool{
     constructor(ctrl){
         super(ctrl)
         this.tolerance = 100
-        this.baseWidth = this.baseImage.width
-        this.baseHeight = this.baseImage.height
+        this.baseWidth = this.baseCanvas.width
+        this.baseHeight = this.baseCanvas.height
         this.uiHelper = new ToolSelectionMagicWandUIHelper(this.baseWidth,this.baseHeight,this.pixiApp.renderer,this.uiRenderTexture)
         ToolSelectionMagicWand.CANVAS.width = this.baseWidth
         ToolSelectionMagicWand.CANVAS.height = this.baseHeight
-        ToolSelectionMagicWand.CTX.drawImage(this.baseImage,0,0,this.baseWidth,this.baseHeight)
+        ToolSelectionMagicWand.CTX.drawImage(this.baseCanvas,0,0,this.baseWidth,this.baseHeight)
         this.isDraging = false
-        this.previewLayer = new MagicWandPreviewLayer(this.baseWidth,this.baseHeight,this.pixiApp.renderer,this.boarCtrl.shadowsTexture,this.boarCtrl.lightsTexture);
+        this.previewLayer = new MagicWandPreviewLayer(this.baseWidth,this.baseHeight,this.pixiApp.renderer,this.boarCtrl.blackLayerTexture,this.boarCtrl.whiteLayerTexture);
         this.layersVisibleInfo = []
     }
     setActive(layer){
@@ -192,7 +192,7 @@ const ToolSelectionMagicWandUIHelper = function(width,height,renderer,renderText
     }
 }
 
-const MagicWandPreviewLayer = function(width,height,pixiRenderer,shadowsTexture,lightsTexture){
+const MagicWandPreviewLayer = function(width,height,pixiRenderer,blackLayerTexture,whiteLayerTexture){
 
     const redrawColor = ()=>{
         colorLayer.clear();
@@ -233,10 +233,10 @@ const MagicWandPreviewLayer = function(width,height,pixiRenderer,shadowsTexture,
 
 
     const colorLayer=new PIXI.Graphics();
-    const lightsSprite=new PIXI.Sprite(lightsTexture);
+    const lightsSprite=new PIXI.Sprite(whiteLayerTexture);
     //this.lightsSprite.cacheAsBitmap=true;
     lightsSprite.alpha=this.whiteLevel;
-    const shadowsSprite=new PIXI.Sprite(shadowsTexture);
+    const shadowsSprite=new PIXI.Sprite(blackLayerTexture);
     //this.shadowsSprite.cacheAsBitmap=false;
     shadowsSprite.alpha=this.darkLevel;
     lightsSprite.mask=  drawMask;
@@ -270,7 +270,6 @@ const MagicWandPreviewLayer = function(width,height,pixiRenderer,shadowsTexture,
 
     this.putImageData = (imageData)=>{
         ctx.putImageData(imageData,0,0)
-        console.log(canvas.toDataURL())
         selectedPixelsTexture.update()
         const sp = new PIXI.Sprite(this.layer.renderTexture)
         pixiRenderer.render(sp,maskTexture,true)

@@ -4,7 +4,7 @@ import RGBUtils from "wayak-rgb-utils"
 
 class Layer extends PIXI.Container{
 
-    constructor(width,height,name,id,shadowsTexture,lightsTexture){
+    constructor(width,height,name,id,blackLayerTexture,whiteLayerTexture){
         super()
         this.name=name;
         this.layerID=id;
@@ -15,17 +15,17 @@ class Layer extends PIXI.Container{
         this.drawMask.cacheAsBitmap = false
         this.drawMask.renderable = true
         this.colorLayer=new PIXI.Graphics();
-        this.lightsSprite=new PIXI.Sprite(lightsTexture);
-        this.lightsSprite.alpha= .3;
-        this.shadowsSprite=new PIXI.Sprite(shadowsTexture);
-        this.shadowsSprite.alpha=.7;
-        this.lightsSprite.mask=this.drawMask;
-        this.shadowsSprite.mask=this.drawMask;
+        this.whiteLayerSprite=new PIXI.Sprite(whiteLayerTexture);
+        this.whiteLayerSprite.alpha= .3;
+        this.blackLayerSprite=new PIXI.Sprite(blackLayerTexture);
+        this.blackLayerSprite.alpha=.7;
+        this.whiteLayerSprite.mask=this.drawMask;
+        this.blackLayerSprite.mask=this.drawMask;
         this.colorLayer.mask=this.drawMask;
         this.currentColor=0xFF0000;
         this.addChild(this.colorLayer);
-        this.addChild(this.lightsSprite);
-        this.addChild(this.shadowsSprite);
+        this.addChild(this.whiteLayerSprite);
+        this.addChild(this.blackLayerSprite);
         this.addChild(this.drawMask);
         this.redrawColor()
         this.rebuildColorsInfos()
@@ -59,17 +59,17 @@ class Layer extends PIXI.Container{
 
 
     set whiteLevel(level) {
-        this.lightsSprite.alpha=level;
+        this.whiteLayerSprite.alpha=level;
     }
     get whiteLevel() {
-        return this.lightsSprite.alpha;
+        return this.whiteLayerSprite.alpha;
     }
 
     set blackLevel(level) {
-        this.shadowsSprite.alpha=level;
+        this.blackLayerSprite.alpha=level;
     }
     get blackLevel() {
-        return this.shadowsSprite.alpha;
+        return this.blackLayerSprite.alpha;
     }
 
 

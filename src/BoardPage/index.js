@@ -188,17 +188,11 @@ function BoardPage(props){
     //const mc2 = new BoardMainController("id",window)
     //console.log("TEST2",mc2)
 
-    const TOOL_BRUSH = "tool_brush"
-    const TOOL_EREASE = "tool_erease"
-    const TOOL_MAGIC_WAND = BoardMainController.TOOL_SELECTION_MAGIC_WAND
-    const TOOL_POLYGON = "tool_polygon"
+    const TOOL_BRUSH = BoardMainController.TOOL_BRUSH
+    const TOOL_MAGIC_WAND = BoardMainController.TOOL_MAGIC_WAND
+    const TOOL_POLYGON = BoardMainController.TOOL_POLYGON
 
-    const POPOVER_TOOL_BRUSH = "POPOVER_TOOL_BRUSH"
-    const POPOVER_TOOL_EREASE = "POPOVER_TOOL_EREASE"
 
-    const brushBtnRef = useRef()
-    const ereaseBtnRef = useRef()
-    const magicWandBtnRef = useRef()
     const colorBtnRef = useRef()
     const contentRef = useRef()
     const darkLightBtnRef = useRef()
@@ -227,7 +221,7 @@ function BoardPage(props){
 
     const [visibleLayersBox,setVisibleLayersBox] = useState(false)
     const [popoverAnchor,setPopoverAnchor] = useState(null)
-    const [boardCtrl] = useState(new BoardMainController("n",window))
+    const [boardCtrl] = useState(new BoardMainController())
     const [toolsValues,setToolsValues] = useState(null)
     const [selectedTool,setSelectedTool] = useState(null)
 
@@ -312,7 +306,7 @@ function BoardPage(props){
                 const screenWidth = window.screen.width * pixelRatio
                 const screenHeight = window.screen.height * pixelRatio
                 const maxCanvasSize =  (screenWidth > screenHeight ? screenWidth : screenHeight) * 1.5
-                boardCtrl.loadImage(e.target.result,contentRef.current,maxCanvasSize).then((canvas)=>{
+                boardCtrl.loadImage(contentRef.current,e.target.result,maxCanvasSize).then((canvas)=>{
                     setVisibleFileLoader(false)
                     contentRef.current.appendChild(canvas)
                     setToolsValues(boardCtrl.getToolsValues())
@@ -347,14 +341,14 @@ function BoardPage(props){
     };
 
     const handleDarksSlider =  (event, newValue) => {
-        let layerInfo = boardCtrl.setDarkToSelectedLayer(newValue)
+        let layerInfo = boardCtrl.setBlackLevelToSelectedLayer(newValue)
         setLayersData((prevLayerData)=>{
             return {...prevLayerData,["selectedLayer"]:layerInfo}
         })
     }
 
     const handleLightsSlider =  (event, newValue) => {
-        let layerInfo = boardCtrl.setLightToSelectedLayer(newValue)
+        let layerInfo = boardCtrl.setWhiteLevelToSelectedLayer(newValue)
         setLayersData((prevLayerData)=>{
             return {...prevLayerData,["selectedLayer"]:layerInfo}
         })
