@@ -25,7 +25,11 @@ import AutoSizer from "react-virtualized-auto-sizer";
 import LayerRow from "./Components/LayerRow";
 import memoize from "memoize-one";
 import FileDropView from "../Components/FileDropView";
-import BoardMainController from "../BoardScripts/BoardMainController";
+
+
+import BoardController  from "color-replace-app-core"
+//import BoardManinController from "color-replace-app-core"
+//import BoardMainController from "../BoardScripts/BoardMainController";
 import SearchIcon from '@material-ui/icons/Search';
 import AddIcon from '@material-ui/icons/Add';
 import Fab from "@material-ui/core/Fab";
@@ -44,6 +48,7 @@ import MagicWandToolBar from "./Components/MagicWandToolBar";
                 .toString(36)
                 .substr(2),
         }));*/
+
 
 const createItemData = memoize((layers, selectedLayerIndex,selectLayer) => ({
     layers,
@@ -187,10 +192,10 @@ function BoardPage(props){
 
     //const mc2 = new BoardMainController("id",window)
     //console.log("TEST2",mc2)
+    const TOOL_BRUSH = BoardController.TOOL_BRUSH
+    const TOOL_MAGIC_WAND = BoardController.TOOL_MAGIC_WAND
+    const TOOL_POLYGON = BoardController.TOOL_POLYGON
 
-    const TOOL_BRUSH = BoardMainController.TOOL_BRUSH
-    const TOOL_MAGIC_WAND = BoardMainController.TOOL_MAGIC_WAND
-    const TOOL_POLYGON = BoardMainController.TOOL_POLYGON
 
 
     const colorBtnRef = useRef()
@@ -221,7 +226,7 @@ function BoardPage(props){
 
     const [visibleLayersBox,setVisibleLayersBox] = useState(false)
     const [popoverAnchor,setPopoverAnchor] = useState(null)
-    const [boardCtrl] = useState(new BoardMainController())
+    const [boardCtrl] = useState(new BoardController())
     const [toolsValues,setToolsValues] = useState(null)
     const [selectedTool,setSelectedTool] = useState(null)
 
@@ -232,18 +237,18 @@ function BoardPage(props){
     }
 
     function handleBrushBtn(event) {
-        boardCtrl.setTool(BoardMainController.TOOL_BRUSH)
+        boardCtrl.setTool(BoardController.TOOL_BRUSH)
         setSelectedTool(TOOL_BRUSH)
     }
 
     function handleEreaseBtn(event) {
-        boardCtrl.setTool(BoardMainController.TOOL_EREASE)
+        boardCtrl.setTool(BoardController.TOOL_EREASE)
         setPopoverAnchorOrigin(botomBarPopoverAnchorOrigin)
         setPopoverTransformOrigin(botomBarPopoverTransformOrigin)
         setPopoverAnchor(event.currentTarget)
     }
     function handleSelectionPolygonBtn(event) {
-        boardCtrl.setTool(BoardMainController.TOOL_SELECTION_POLYGON)
+        boardCtrl.setTool(BoardController.TOOL_SELECTION_POLYGON)
     }
 
 
@@ -506,7 +511,7 @@ function BoardPage(props){
                 {toolsValues && (
                     <>
                         <BrushToolBar visible={selectedTool === TOOL_BRUSH}
-                                  brushValues={{type:toolsValues[BoardMainController.TOOL_BRUSH].type,size:toolsValues[BoardMainController.TOOL_BRUSH].size,hardness:toolsValues[BoardMainController.TOOL_BRUSH].hardness}}
+                                  brushValues={{type:toolsValues[BoardController.TOOL_BRUSH].type,size:toolsValues[BoardController.TOOL_BRUSH].size,hardness:toolsValues[BoardController.TOOL_BRUSH].hardness}}
                                   handleBrushType={handleBrushType}
                                   handleHardness={handleBrushHardness}
                                   handleSize={handleBrushSize}
