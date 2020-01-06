@@ -18,13 +18,14 @@ import BottomToolBar from "./Components/ToolBars/BottomToolBar";
 import BrushToolBar from "./Components/ToolBars/BrushToolBar";
 import MagicWandToolBar from "./Components/ToolBars/MagicWandToolBar";
 import LayersBox from "./Components/LayersBox";
+import Button from "@material-ui/core/Button";
 
 
 
 const useStyles = makeStyles(theme => ({
     toolbar:{
         paddingLeft:0,
-        paddingRight:0
+        paddingRight:10
     },
     bg:{
         background:"url("+bgImage+")",
@@ -323,9 +324,16 @@ function BoardPage(props){
 
     }
 
+
     const selectedLayer = layersData.selectedLayerIndex === null ? null : layersData.layers[layersData.selectedLayerIndex]
 
-
+    const handleExportResult = ()=>{
+        let resultCanvas = boardCtrl.getCanvasResult()
+        var image = new Image();
+        image.src = resultCanvas.toDataURL();
+        var w = window.open("");
+        w.document.write(image.outerHTML);
+    }
 
     return(
         <>
@@ -355,6 +363,10 @@ function BoardPage(props){
                                 <SearchIcon className={classes.svgIcon}/>
                             </IconButton>
 
+                            <div className={classes.grow}/>
+                            <Button onClick={handleExportResult} variant="contained" size="small" color="secondary">
+                                Export image
+                            </Button>
                         </Toolbar>
                     </AppBar>
                 </Slide>
