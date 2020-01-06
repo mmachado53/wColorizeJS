@@ -1,23 +1,23 @@
 import Slider from "@material-ui/core/Slider";
 import withStyles from "@material-ui/core/styles/withStyles";
-const GradientSlider = withStyles({
+const GradientSlider = withStyles(theme=> ({
     root: {
         marginTop:15,
         marginBottom:10,
         color: '#00000000',
-        height: 10,
+        height: 5,
         padding:0,
-        borderRadius:5,
-        background:'linear-gradient(to left, #666666 0%, #00000050 100%)'
+        borderRadius:2,
+        background: `linear-gradient(to left, ${theme.palette.secondary.main} 0%, ${theme.palette.secondary.dark} 100%)`
     },
     thumb: {
-        height: 14,
-        width: 6,
-        backgroundColor: '#fff',
-        border: '1px solid #000000',
+        height: 12,
+        width: 10,
+        backgroundColor: theme.palette.secondary.light,
+        border: `1px solid ${theme.palette.secondary.dark}`,
         borderRadius:2,
-        marginTop: -2,
-        marginLeft: -3,
+        marginTop: -3,
+        marginLeft: -5,
         '&:focus,&:hover,&$active': {
             boxShadow: 'inherit',
         },
@@ -41,7 +41,7 @@ const GradientSlider = withStyles({
         height: 20,
         borderRadius: 4,
     },
-})(Slider);
+}))(Slider);
 
 
 export default GradientSlider
