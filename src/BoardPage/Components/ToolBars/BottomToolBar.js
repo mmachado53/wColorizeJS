@@ -52,7 +52,7 @@ const BottomToolBar = (props)=>{
                         <img className={classes.iconImg} src={magicWandIcon}/>
                     </IconButton>
 
-                    <IconButton onClick={handleSelectionPolygonBtn}>
+                    <IconButton style={{display:"none"}} onClick={handleSelectionPolygonBtn}>
                         <img className={classes.iconImg} src={polygonIcon}/>
                     </IconButton>
                 </Toolbar>

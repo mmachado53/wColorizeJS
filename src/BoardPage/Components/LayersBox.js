@@ -77,7 +77,7 @@ const LayersBox = memo((props) => {
 
                 <div className={classes.layerToolBar}>
                     <div className={classes.grow}/>
-                    <IconButton disabled={selectedLayerIndex == null} className={classes.iconBtn}>
+                    <IconButton style={{display:"none"}} disabled={selectedLayerIndex == null} className={classes.iconBtn}>
                         <DeleteIcon className={classes.svgIcon}/>
                     </IconButton>
                     <IconButton onClick={handleAddLayer} className={classes.iconBtn}>
