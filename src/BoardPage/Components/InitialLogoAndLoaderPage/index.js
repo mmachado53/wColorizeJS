@@ -5,6 +5,7 @@ import makeStyles from "@material-ui/core/styles/makeStyles";
 import logoImg from "../../../images/logo.png"
 import Button from "@material-ui/core/Button";
 import withStyles from "@material-ui/core/styles/withStyles";
+import chromeIconImg from "../../../images/chrome-icon.png"
 const VideoButton = withStyles(theme => ({
     root: {
         color: '#ffffff',
@@ -59,6 +60,18 @@ const useStyles = makeStyles(theme => ({
         margin : "auto",
         background :"url("+logoImg+")",
         backgroundSize : "cover"
+    },
+    chromeIcon : {
+        width : 20,
+        height : 20,
+        background :"url("+chromeIconImg+")",
+        backgroundSize : "cover",
+        display : "inline-block",
+        marginLeft : 5
+    },
+    chromeWarning : {
+        fontSize: 16,
+        color: "#ffffff"
     }
 }));
 
@@ -78,6 +91,10 @@ const Index = (props)=>{
                 <VideoButton onClick={openVideo}>
                     Watch Demo Video
                 </VideoButton>
+            </p>
+            <p className={classes.chromeWarning}>
+                For now it is only supported by chrome
+                <span className={classes.chromeIcon}/>
             </p>
             <FileDropView onFiles={onFileDrop} accept={"image/x-png,image/jpeg"}/>
         </div>
