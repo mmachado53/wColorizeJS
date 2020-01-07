@@ -66,13 +66,16 @@ const useStyles = makeStyles(theme => ({
 const Index = (props)=>{
     const classes = useStyles()
     const {onFileDrop} = props
+    const openVideo = ()=>{
+        window.open('https://www.youtube.com/watch?v=xLzOS9Q5Zng','_blank')
+    }
     return (
         <div className={classes.loaderContainer}>
             <p>
                 <div className={classes.logo} />
             </p>
             <p className={classes.videoButtonContainer}>
-                <VideoButton>
+                <VideoButton onClick={openVideo}>
                     Watch Demo Video
                 </VideoButton>
             </p>
