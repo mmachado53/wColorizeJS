@@ -9,7 +9,6 @@ import Typography from "@material-ui/core/Typography";
 import LayersTwoToneIcon from '@material-ui/icons/LayersTwoTone';
 import ExposureTwoToneIcon from '@material-ui/icons/ExposureTwoTone';
 import Slide from '@material-ui/core/Slide';
-import FileDropView from "../Components/FileDropView";
 import ColorLayerToolBar from "./Components/ToolBars/ColorLayerToolBar";
 import BlackWhiteLayerToolBar from "./Components/ToolBars/BlackWhiteLayerToolBar";
 import BoardController  from "color-replace-app-core"
@@ -19,6 +18,7 @@ import BrushToolBar from "./Components/ToolBars/BrushToolBar";
 import MagicWandToolBar from "./Components/ToolBars/MagicWandToolBar";
 import LayersBox from "./Components/LayersBox";
 import Button from "@material-ui/core/Button";
+import Index from "./Components/InitialLogoAndLoaderPage";
 
 
 
@@ -72,6 +72,14 @@ const useStyles = makeStyles(theme => ({
     },
     grow:{
         flexGrow:1
+    },
+    loaderContainer:{
+        position:"fixed",
+        top:0,
+        left:0,
+        right:0,
+        bottom:0,
+        background: theme.palette.primary.dark
     }
 }));
 
@@ -365,18 +373,20 @@ function BoardPage(props){
 
                             <div className={classes.grow}/>
                             <Button onClick={handleExportResult} variant="contained" size="small" color="secondary">
-                                Export image
+                                Export
                             </Button>
                         </Toolbar>
                     </AppBar>
                 </Slide>
 
 
+
                 <div ref={contentRef} className={classes.content}>
-                    {visibleFileLoader && (
-                        <FileDropView onFiles={onFileDrop} accept={"image/x-png,image/jpeg"}/>
-                    )}
+
                 </div>
+                {visibleFileLoader && (
+                    <Index onFileDrop={onFileDrop}/>
+                )}
 
                 <LayersBox
                     onClose={handleCloseLayersBox}
