@@ -6,11 +6,11 @@ import Slider from "@material-ui/core/Slider";
 
 export const MenuTabs = withStyles(theme => ({
     root: {
-        borderBottom: '1px solid #e8e8e8',
+        //borderBottom: '1px solid #e8e8e8',
     },
     indicator: {
-        height:3,
-        backgroundColor: theme.palette.secondary.light,
+        height:0,
+        //backgroundColor: theme.palette.secondary.light,
     },
 }))(Tabs);
 

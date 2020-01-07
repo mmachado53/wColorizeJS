@@ -15,20 +15,19 @@ const colorsStyle = {
 }
 
 const LayerRow = memo(({ data, index, style }) => {
-    const { layers,selectedLayer, selectLayer } = data;
+
+    const { layers,selectedLayerIndex, selectedLayerId, selectLayer } = data;
     const layer = layers[index];
     const colorStyle_ = {...colorsStyle,["backgroundColor"]:`#${layer.hexColor}`}
 
     function handleClick(){
-        //console.log("HANDLECLICK",index,layer.name)
         selectLayer(index,layer.id)
-
     }
     function handleRemove() {
         console.log("remove")
     }
     return (
-        <ListItem onClick={handleClick} selected={selectedLayer.id == layer.id} button style={style} key={index}>
+        <ListItem onClick={handleClick} selected={selectedLayerId === layer.id} button style={style} key={index}>
             <ListItemAvatar style={{minWidth:30}}>
                 <Avatar  style={colorStyle_}> </Avatar>
             </ListItemAvatar>
@@ -46,14 +45,13 @@ const LayerRow = memo(({ data, index, style }) => {
     if( prevLayerInfo.id === nextLayerInfo.id
         && prevLayerInfo.name === nextLayerInfo.name
         && prevLayerInfo.hexColor === nextLayerInfo.hexColor){
-        if(prevData.selectedLayer.id != nextData.selectedLayer.id && (prevData.selectedLayer.id == prevLayerInfo.id || nextData.selectedLayer.id == nextLayerInfo.id ) ){
+        if(prevData.selectedLayerId != nextData.selectedLayerId && (prevData.selectedLayerId == prevLayerInfo.id || nextData.selectedLayerId == nextLayerInfo.id ) ){
            return false
         }
         return true
     }
 
-    //console.log(prevData.selectedLayerIndex,nextData.selectedLayerIndex, prevCount,nextCount)
-   // console.log()
+
     return false
 
 });

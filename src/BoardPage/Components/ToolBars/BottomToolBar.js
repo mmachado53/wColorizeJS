@@ -1,15 +1,15 @@
 import React, {memo} from "react";
 import Toolbar from "@material-ui/core/Toolbar";
 import IconButton from "@material-ui/core/IconButton";
-import brushIcon from "../../images/brush-icon.png";
-import ereaseIcon from "../../images/erease-icon.png";
+import brushIcon from "../../../images/brush-icon.png";
+import ereaseIcon from "../../../images/erease-icon.png";
 import Divider from "@material-ui/core/Divider";
-import magicWandIcon from "../../images/magic-wand-icon.png";
-import polygonIcon from "../../images/polygon-icon.png";
+import magicWandIcon from "../../../images/magic-wand-icon.png";
+import polygonIcon from "../../../images/polygon-icon.png";
 import AppBar from "@material-ui/core/AppBar/AppBar";
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import PropTypes from "prop-types"
-import LayerRow from "./LayerRow";
+import LayerRow from "../LayerRow";
 import Slide from "@material-ui/core/Slide";
 
 const useStyles = makeStyles(theme => ({
@@ -52,7 +52,7 @@ const BottomToolBar = (props)=>{
                         <img className={classes.iconImg} src={magicWandIcon}/>
                     </IconButton>
 
-                    <IconButton onClick={handleSelectionPolygonBtn}>
+                    <IconButton style={{display:"none"}} onClick={handleSelectionPolygonBtn}>
                         <img className={classes.iconImg} src={polygonIcon}/>
                     </IconButton>
                 </Toolbar>
